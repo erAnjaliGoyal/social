@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+    {% for posts in post %}
+         {{posts.render()|safe}}
+    {% endfor %}
+</div>
+{% endblock %}

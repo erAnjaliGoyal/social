@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+  $(function() {
+  $("input").on("input.highlight", function() {
+    // Determine specified search term
+    var searchTerm = $(this).val();
+    // Highlight search term inside a specific context
+    $(".box").unmark().mark(searchTerm);
+  }).trigger("input.highlight").focus();
+});
+</script>
+<style>
+mark {
+  background: orange;
+  color: black;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/mark.js/7.0.0/jquery.mark.min.js"></script>
+<center><form action="/blog/search" method="get">
+  <input type="text" name="search" placeholder="Search.." id="search" value="{{search}}">
+  <button type="submit">search</button>
+</form></center>
+<br>
+  {% for post in posts %}
+  {% if post.render().focus %}
+  <div class="box">
+    <div class="show_hide">
+      {{ post.render() | safe }}
+    </div>
+
+    <br>
+    <hr>
+
+    <div class = "container">
+
+
+         <hr>
+         <!-- comment container -->
+         <div class = "comment">
+              <form action = "/blog/postcomment/{{post.key().id()}}">
+                    <input type = "submit" class="btn btn-outline-primary" value = "comment" title = "post comment">
+              </form>
+         </div>
+
+         <hr>
+          <!-- edit and delete posts container -->
+         <div class="edit_delete">
+            <table>
+              <tr>
+              <form action="/blog/editpost/{{post.key().id()}}">
+              <td><input type="submit" class="btn btn-outline-secondary" value="edit" title="edit post"></td>
+              </form>
+
+              <form action="/blog/deletepost/{{post.key().id()}}">
+              <td><input type="submit" class="btn btn-outline-warning" value="delete" title="delete post"></td>
+              </form></tr>
+            </table>
+         </div>
+
+    </div>
+    {% endif %}
+        </div>
+    <br>
+  {% endfor %}
+
+{% endblock %}

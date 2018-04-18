@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+function hgihtwords(keyword){
+  $('.cd-item').each(function(index, elem){
+    let oldHtml = $(elem).html()
+    //console.log(oldHtml.match(new RegExp('(<[a-z1-9]+>.*?)('+keyword+')(.*?<\/[a-z1-9]+>)', 'ig')))
+    let newHtml = oldHtml.replace(new RegExp('(<[a-z1-9]+>.*?)('+keyword+')(.*?<\/[a-z1-9]+>)', 'ig'), '$1<span class="mark">$2</span>$3')
+    if(oldHtml == newHtml){
+      $(elem).hide(1500)
+    }
+    else{
+      $(elem).show(1500).html( newHtml)
+    }
+
+  })
+}
+
+function resetHighlight(){
+  $('.cd-item').each(function(index, elem){
+    let oldHtml = $(elem).html()
+    let newHtml = oldHtml.replace(new RegExp('(<span class="mark">)+(.*?)(</span>)+', 'ig'), '$2')
+    $(elem).show(1500).html( newHtml)
+  });
+}
+
+function showAll(){
+  $('.cd-item').show(1500)
+}</script>
+<style>
+.mark {
+  background-color: orange;
+    -moz-border-radius: 5px; /* FF1+ */
+    -webkit-border-radius: 5px; /* Saf3-4 */
+    border-radius: 5px; /* Opera 10.5, IE 9, Saf5, Chrome */
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* FF3.5+ */
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* Saf3.0+, Chrome */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* Opera 10.5+, IE 9.0 */
+}
+.mark {
+     padding:1px 4px;
+     margin:0 -4px;
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/mark.js/7.0.0/jquery.mark.min.js"></script>
+  <main class="cd-main">
+    <header>
+      <h1>Want to share anything?!</h1>
+    </header>
+    <center>
+    <input type="text" placeholder="Search.." id="search" value="">
+    <br><br>
+    <button onclick="hgihtwords($('#search').val())" class="btn btn-primary btn-md" style="font-size: 15px">Search</button>
+<button onclick="resetHighlight()" class="btn btn-primary btn-md" style="font-size: 15px">Reset</button>
+<button onclick="showAll()" class="btn btn-primary btn-md" style="font-size: 15px">Show All</button>
+
+    </center>
+    <br>
+    <ul class="cd-gallery">
+      {% for post in posts %}
+      <li class="cd-item" id="hao">
+        <a href="/blog/ekblog/{{post.key().id()}}">
+          <div>
+            <h2>{{post.category}}</h2>
+            <p>{{post.subject}}</p>
+            <b><div class = "container">
+
+         <!-- like and dislike posts container -->
+         <div class="like_dislike row">
+              <div class="like"><i class="fa fa-heart-o" style="font-size:30px;">&nbsp{{post.like}}</i></div>
+         </div>
+
+         <hr>
+         <!-- comment container -->
+         <div class = "comment">
+              <div class="like"><i class="fa fa-comment-o" style="font-size:30px;">&nbsp{{post.count_comment}}</i> </div>
+         </div>
+
+         <hr>
+    </div></b>
+          </div>
+        </a>
+      </li>
+  {% endfor %}
+    </ul> <!-- .cd-gallery -->
+  </main> <!-- .cd-main -->
+  <div class="cd-folding-panel">
+
+    <div class="fold-left"></div> <!-- this is the left fold -->
+
+    <div class="fold-right"></div> <!-- this is the right fold -->
+
+    <div class="cd-fold-content">
+    </div>
+
+    <a class="cd-close" href="#0"></a>
+  </div> <!-- .cd-folding-panel -->
+
+{% endblock %}

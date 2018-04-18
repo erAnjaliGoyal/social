@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="cd-fold-content single-page">
+    {{post.render() | safe}}
+
+  <br>
+  <hr>
+      <div class = "container">
+
+         <!-- like and dislike posts container -->
+         <div class="like_dislike row">
+              <div class="like"><i class="fa fa-heart-o" style="font-size:30px;">&nbsp{{post.like}}</i></div>
+         </div>
+
+         <hr>
+         <!-- comment container -->
+         <div class = "comment">
+              <div class="like"><i class="fa fa-comment-o" style="font-size:30px;">&nbsp{{post.count_comment}}</i> </div>
+         </div>
+
+         <hr>
+    </div>
+  </div>
+{% endblock %}

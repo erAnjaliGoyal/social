@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+
+<div class = "box">
+
+
+<div class = "show_hide">
+    {% for posts in post %}
+    {% if posts.category == c %}
+    {{posts.render() | safe}}
+    {% endif %}
+    {% endfor %}
+</div>
+</div>
+
+
+
+{% endblock %}

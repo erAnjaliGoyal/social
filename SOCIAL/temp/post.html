@@ -1,0 +1,35 @@
+<style type="text/css">
+  .category{
+    border: 2px;
+    width:  xxx;
+    border-radius: 12px;
+    padding: 15px;
+    height: xxx;
+    display: block;
+    background-color: #cccccc;
+    color: grey;
+    font-weight: bold;
+    display: inline-block
+  }
+</style>
+<div class="post">
+  <a href = "/blog/tagsPost/{{p.category}}" target="_blank"  style="text-decoration:none"><div class="category">
+     {{p.category}}
+   </div></a>
+  <div class="post-heading">
+    <a href="/blog/doblog/{{p.key().id()}}" ><div class="post-title">
+      {{p.subject}}
+    </div></a>
+
+    <div class="post-date">
+     {{p.created.strftime("%b %d, %Y")}}
+     <br>
+   </div>
+  </div>
+  <div class="post-content">
+    {{p._render_text | safe}}
+  </div>
+  <div class="post-user" >
+     By <a href="/blog/users/{{p.user_id}}">{{p.username}}</a>
+    </div>
+</div>

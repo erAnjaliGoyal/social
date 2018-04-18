@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+ <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta charset="utf-8">
+
+    <!-- Include external CSS. -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+
+    <!-- Include Editor style. -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.5/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.5/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+</head>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+
+    <!-- Include Editor JS files. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.5/js/froala_editor.pkgd.min.js"></script>
+
+    <!-- Initialize the editor. -->
+    <script> $(function() { $('textarea').froalaEditor() }); </script>
+<CENTER><h2 style="font-weight: bold; font-size: 36px">Share your views here !</h2>
+ <br>
+ <br>
+ <br>
+    <form method="post">
+        <label>
+            <div style="font-weight: bold; font-size: 30px; text-align: left;">Category :</div>
+      <select name="category" id ="category" autofocus>
+        <option value="Advertisement">Category</option>
+  <option value="Advertisement">Advertisement</option>
+  <option value="Notice/Information">Notice/Information</option>
+  <option value="fiat">Thoughts</option>
+  <option value="Experience">Experience</option>
+  <option value="Query">Query</option>
+  <option value="Others">Others</option>
+      </select>
+      </label>
+<br><br>
+      <label>
+        <div style="font-weight: bold; font-size: 30px; text-align: left;">Subject :</div>
+        <input type="text" name="subject" value="{{subject}}" id="search1">
+      </label>
+      <br>
+      <label>
+        <div style="font-weight: bold; font-size: 30px; text-align: left;">Content :</div>
+        <textarea name="content" placeholder="Enter Content" id="search1">{{content}}</textarea>
+
+      </label>
+</CENTER>
+
+
+
+      <div class="error" style="color: red; font-weight: bold;">{{error}}</div>
+      <br>
+      <input type="submit" class="btn btn-primary btn-md">
+    </form>
+    <a href="/blog" style="float: right;"><button class="btn btn-danger">Cancel</button></a>
+{% endblock %}

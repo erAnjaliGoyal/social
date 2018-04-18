@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<meta charset="utf-8">
+
+    <!-- Include external CSS. -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+
+    <!-- Include Editor style. -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.5/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.5/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+</head>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+
+    <!-- Include Editor JS files. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.5/js/froala_editor.pkgd.min.js"></script>
+
+    <!-- Initialize the editor. -->
+    <script> $(function() { $('textarea').froalaEditor() }); </script>
+<div class="box">
+  <div class="show_hide">
+    {{post.render() | safe}}
+  </div>
+  <div class = "container">
+
+         <!-- like and dislike posts container -->
+         <div class="like_dislike row">
+              <div class="like"><i class="fa fa-heart-o" style="font-size:30px;">&nbsp{{post.like}}</i></div>
+         </div>
+
+         <hr>
+         <!-- comment container -->
+         <div class = "comment">
+              <div class="like"><i class="fa fa-comment-o" style="font-size:30px;">&nbsp{{post.count_comment}}</i> </div>
+         </div>
+
+         <hr>
+    </div>
+        </div>
+
+
+  <!-- Container for comments -->
+  <div>
+  	<br>
+
+        <!-- Comments entered by users -->
+        <div>
+  	    {% for co in comments %}
+  	        <div class="comment_box">
+  	                <div class="user">
+  		 	    {{co.holder}}
+  		    </div>
+          <div class = "date">
+            ({{co.created.strftime("%b %d, %Y")}})
+            <br>
+          </div>
+  		    <div>
+        	     {{co.comment | safe}}
+  		    </div>
+  		    {% if co.holder == user.name %}
+          <div>
+              <a class = "demo" href="/blog/editcomment/{{co.key().id()}}" style="color: black" title="edit comment">&#x270E;</a>
+              <a class = "demo" href="/blog/deletecomment/{{co.key().id()}}" style="color: black" title="delete comment">&#x2718;</a>
+          </div>
+          {% endif %}
+  		</div>
+      <br>
+  	    {% endfor %}
+  	</div>
+
+<br>
+    <form method="post" action="/blog/commentmainpage/{{post.key().id()}}">
+        <div class="error">{{error}}</div>
+        <textarea placeholder="Comment here!" name="comment">{{content}} </textarea>
+        <br>
+        <input type="submit" class="btn btn-primary btn-md">
+    </form>
+  </div>
+{% endblock %}

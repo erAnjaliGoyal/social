@@ -1,0 +1,54 @@
+body {
+    font-family: "Lato" , sans-serif;
+    color: #747704;
+    font-weight: 300;
+}
+
+.main {
+     height: 350px;
+     width: 1140px;     
+
+}
+
+.main1 {
+     height: 300px;
+     width: 555px;     
+
+}
+
+.main2 {
+     height: 300px;
+     width: 555px;     
+
+}
+
+.main3 {
+     height: 300px;
+     width: 555px;     
+
+}
+
+.main4 {
+     height: 100%;
+     width: 100%;     
+
+}
+
+.text-muted {
+     color: #bcbbbb;
+}
+
+.text-thin {
+    font-weight: 100;
+}
+
+.title-super {
+    font-size: 60px;
+
+}
+
+.title-logo {
+    margin-top: 20px;
+    width: 100px;
+    height: 100px;
+}

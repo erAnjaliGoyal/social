@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box"><div class="show_hide">{{post.render() | safe}}</div>
+
+  <br>
+  <div class = "container">
+
+         <!-- like and dislike posts container -->
+         <div class="like_dislike row">
+              <div class="like"><i class="fa fa-heart-o" style="font-size:30px;">&nbsp{{post.like}}</i></div>
+         </div>
+
+         <hr>
+         <!-- comment container -->
+         <div class = "comment">
+              <div class="like"><i class="fa fa-comment-o" style="font-size:30px;">&nbsp{{post.count_comment}}</i> </div>
+         </div>
+
+         <hr>
+    </div>
+  <hr>
+      <div class = "container">
+
+         <!-- like and dislike posts container -->
+         <div class="like_dislike row">
+          <table>
+            {% if post.username != user.name %}
+            <tr>
+              <form action="/blog/dislike/{{post.key().id()}}">
+                <td><input type="submit" id= "dislike" class="btn btn-outline-danger" value="{{post.dislike}}" title="dislike post"></td>
+              </form>
+              <form action="/blog/like/{{post.key().id()}}">
+                <td><input type="submit" id= "like" class="btn btn-outline-success" value="{{post.like}}" title="like post"></td>
+              </form>
+          </tr>
+        {% endif %}</table>
+         </div>
+
+         <hr>
+         <!-- comment container -->
+         <div class = "comment">
+              <form action = "/blog/postcomment/{{post.key().id()}}">
+                    <input type = "submit" class="btn btn-outline-primary" value = "comment" title = "post comment">
+              </form>
+         </div>
+
+         <hr>
+          <!-- edit and delete posts container -->
+         {% if post.username == user.name %}
+         <div class="edit_delete">
+            <table>
+              <tr>
+              <form action="/blog/editpost/{{post.key().id()}}">
+                <td><input type="submit" class="btn btn-outline-secondary" value="edit" title="edit post"></td>
+              </form>
+
+              <form action="/blog/deletepost/{{post.key().id()}}">
+                <td><input type="submit" class="btn btn-outline-warning" value="delete" title="delete post"></td>
+              </form></tr>
+            </table>
+         </div>
+         {% endif %}
+<br>
+  </div>
+  <!-- Container for comments -->
+<div>
+        {% for co in comments %}
+            <div class="comment_box">
+                    <div class="user">
+            {{co.holder}}
+          </div>
+          <div class = "date">
+            ({{co.created.strftime("%b %d, %Y")}})
+            <br>
+          </div>
+          <div>
+               {{co.comment | safe}}
+          </div>
+          {% if co.holder == user.name %}
+          <div>
+              <a class = "demo" href="/blog/editcomment/{{co.key().id()}}" style="color: black" title="edit comment">&#x270E;</a>
+              <a class = "demo" href="/blog/deletecomment/{{co.key().id()}}" style="color: black" title="delete comment">&#x2718;</a>
+          </div>
+          {% endif %}
+      </div>
+      <br>
+        {% endfor %}
+    </div>
+{% endblock %}

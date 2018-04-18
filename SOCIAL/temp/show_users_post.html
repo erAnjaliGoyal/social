@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+function hgihtwords(keyword){
+  $('.cd-item').each(function(index, elem){
+    let oldHtml = $(elem).html()
+    //console.log(oldHtml.match(new RegExp('(<[a-z1-9]+>.*?)('+keyword+')(.*?<\/[a-z1-9]+>)', 'ig')))
+    let newHtml = oldHtml.replace(new RegExp('(<[a-z1-9]+>.*?)('+keyword+')(.*?<\/[a-z1-9]+>)', 'ig'), '$1<span class="mark">$2</span>$3')
+    if(oldHtml == newHtml){
+      $(elem).hide(1500)
+    }
+    else{
+      $(elem).show(1500).html( newHtml)
+    }
+
+  })
+}
+
+function resetHighlight(){
+  $('.cd-item').each(function(index, elem){
+    let oldHtml = $(elem).html()
+    let newHtml = oldHtml.replace(new RegExp('(<span class="mark">)+(.*?)(</span>)+', 'ig'), '$2')
+    $(elem).show(1500).html( newHtml)
+  });
+}
+
+function showAll(){
+  $('.cd-item').show(1500)
+}</script>
+<style>
+.mark {
+  background-color: orange;
+    -moz-border-radius: 5px; /* FF1+ */
+    -webkit-border-radius: 5px; /* Saf3-4 */
+    border-radius: 5px; /* Opera 10.5, IE 9, Saf5, Chrome */
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* FF3.5+ */
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* Saf3.0+, Chrome */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* Opera 10.5+, IE 9.0 */
+}
+.mark {
+     padding:1px 4px;
+     margin:0 -4px;
+}
+</style>
+
+<center>
+    <input type="text" placeholder="Search.." id="search" value="">
+    <br>
+    <button onclick="hgihtwords($('#search').val())">Search</button>
+<button onclick="resetHighlight()">Reset</button>
+<button onclick="showAll()">Show All</button>
+
+    </center>
+<br>
+  {% for post in posts %}
+
+  <div class="box">
+
+    <div class="show_hide">
+      {{ post.render() | safe }}
+    </div>
+
+    <br>
+    <hr>
+
+    <div class = "container">
+
+         <!-- like and dislike posts container -->
+         {% if user.name != post.username%}
+         <div class="like_dislike row">
+          <table>
+            <tr>
+              <form action="/blog/like/{{post.key().id()}}">
+              <td><input type="submit" class="btn btn-outline-success" value="{{post.like}}" title="like post"></td>
+              </form>
+              <form action="/blog/dislike/{{post.key().id()}}">
+              <td><input type="submit" class="btn btn-outline-danger" value="{{post.dislike}}" title="dislike post"></td>
+              </form></tr></table>
+         </div>
+         {% endif %}
+
+         <hr>
+         <!-- comment container -->
+         <div class = "comment">
+              <form action = "/blog/postcomment/{{post.key().id()}}">
+                    <input type = "submit" class="btn btn-outline-primary" value = "comment" title = "post comment">
+              </form>
+         </div>
+
+         <hr>
+          <!-- edit and delete posts container -->
+         <div class="edit_delete">
+            <table>
+              <tr>
+              <form action="/blog/editpost/{{post.key().id()}}">
+              <td><input type="submit" class="btn btn-outline-secondary" value="edit" title="edit post"></td>
+              </form>
+
+              <form action="/blog/deletepost/{{post.key().id()}}">
+              <td><input type="submit" class="btn btn-outline-warning" value="delete" title="delete post"></td>
+              </form></tr>
+            </table>
+         </div>
+
+    </div>
+
+        </div>
+    <br>
+
+  {% endfor %}
+
+{% endblock %}

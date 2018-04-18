@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blog</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link href='http://fonts.googleapis.com/css?family=Vollkorn|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/static/reset.css"> <!-- CSS reset -->
+  <link rel="stylesheet" href="/static/style.css"> <!-- Resource style -->
+  <script src="/static/modernizr.js"></script> <!-- Modernizr -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="/static/jquery-2.1.1.js"></script>
+<script src="/static/main.js"></script> <!-- Resource jQuery -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="topnav" id="myTopnav">
+  <a class="login-link" href="/blog">Home</a>
+  <a class="login-link" href="/blog/newpost">Create new post!</a>
+  <a class="login-link" href="/blog/chat">Start Chatting</a>
+  <div class="login-link" style="float: right">
+    <a class="login-link" href="/blog/userpost">MyPosts</a>
+    <a class="login-link" href="/blog/mostlikedposts">Mostlikedposts</a>
+    {% if user %}
+      <a href="/blog/view_profile/{{user.name}}">{{user.name}}</a> <a class="login-link" href="/logout">logout</a>
+    {% else %}
+      <a class="login-link" href="/login">Login</a>
+      <a class="login-link" href="/signup">SignUp</a>
+    {% endif %}
+</div>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+</div>
+<br>
+  {% block content %}
+  {% endblock %}
+  <script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>
+</body>
+
+</html>
